@@ -1,0 +1,47 @@
+application: littlebrother-1094
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+default_expiration: "1d"
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?tests$
+- ^(.*/)?test$
+- ^test/(.*/)?
+- ^COPYING.LESSER
+- ^README\..*
+- \.gitignore
+- ^\.git/.*
+- \.*\.lint$
+- ^fabfile\.py
+- ^testrunner\.py
+- ^grunt\.js
+- ^node_modules/(.*/)?
+
+handlers:
+- url: /
+  static_files: app/index.html
+  upload: app/index.html
+
+- url: /(.*\.(html|js|gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff))
+  static_files: app/\1
+  upload: app/(.*\.(html|js|gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff))
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
