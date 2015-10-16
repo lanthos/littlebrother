@@ -1,0 +1,26 @@
+canvas {
+	margin: 0 auto;
+    display: block;
+    background-color: #2F2F2E;
+    padding: 10px;
+}
+
+.header > .wrapper {
+	margin: 0 auto;
+    display: flex;
+    width: 632px;
+}
+
+.relative{
+	position: relative;
+}
+
+.score {
+    color: #B6FFC2;
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
+    font-size: 25px;
+    font-family: monospace;
+    line-height: 21px;
+}

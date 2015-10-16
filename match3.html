@@ -4,6 +4,7 @@
 <head>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body style="background-color: #030302">
 <div style="display:none">
@@ -14,8 +15,20 @@
   <img id="blue" src="images/blue.jpg">
   <img id="blank" src="images/blank.jpg">
 </div>
-<div style="background-color:#1B1B1F; padding: 30px; width: auto">
-<canvas id="gameCanvas" width="800" height="600"></canvas>
+<div class="header">
+  <div class="relative wrapper">
+    <!-- <img id="header" src="images/mock header.png"> -->
+    <img id="header" src="images/header.png">
+    <div class="score">
+      <div> Score : </div>
+      <div> Level : </div>
+    </div>
+  </div>
+</div>
+  
+</div> 
+<div >
+<canvas id="gameCanvas" width="612" height="600"></canvas>
 </div>
 </body>
 <script>
@@ -273,12 +286,6 @@
     var rightAreaX = TILE_W*TILE_COLS;
     var lineSkip = 15;
     var lineY = 20;
-    canvasContext.fillText("Click any piece to select",rightAreaX,lineY);
-    lineY += lineSkip;
-    canvasContext.fillText("Then click spot to move to",rightAreaX,lineY);
-    lineY += lineSkip;
-    canvasContext.fillText("Little Brother club game alpha 0.1.",rightAreaX,lineY);
-    lineY += lineSkip;
   }
 </script>
 
