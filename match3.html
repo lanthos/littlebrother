@@ -20,8 +20,8 @@
     <!-- <img id="header" src="images/mock header.png"> -->
     <img id="header" src="images/header.png">
     <div class="score">
-      <div> Score : </div>
-      <div> Level : </div>
+      <div> Score : <span id="score">0</span></div>
+      <div> Level : <span id="level">1</span></div>
     </div>
   </div>
 </div>
@@ -37,6 +37,8 @@
   var selectedIdx = -1;
   var tileOverIdx = -1;
   var matches = [];
+  var scoreValue = 0;
+  var score = document.getElementById("score");
   
   const TILE_W = 75;
   const TILE_H = 75;
@@ -106,6 +108,8 @@
               matches.push(tileCoordToIndex(c-s, r));
             }
             console.log("Matched h! " + typeHere);
+            ++scoreValue
+            score.innerHTML = scoreValue;
           }
         } else {
           lastSeen = typeHere;
@@ -200,11 +204,11 @@
     // these next few lines set up our game logic and render to happen 60 times per second
     var framesPerSecond = 10;
     setInterval(function() {
-    gravity();
-    match3Checker();
-    removeClusters();
-        drawEverything();
-      }, 1000/framesPerSecond);
+      gravity();
+      match3Checker();
+      removeClusters();
+      drawEverything();
+    }, 1000/framesPerSecond);
 
     canvasContext.font="12px Arial";
   }
