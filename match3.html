@@ -38,6 +38,7 @@
   var tileOverIdx = -1;
   var matches = [];
   var scoreValue = 0;
+  var highScore = 0;
   var score = document.getElementById("score");
   
   const TILE_W = 75;
@@ -72,6 +73,33 @@
   function initInput() {
     document.addEventListener("mousemove", mousemoved);
     document.addEventListener("mousedown", mouseclicked);
+  }
+  
+  function saveData() {
+    if(typeof(Storage) != "undefined") {
+            localStorage.localHighScore = highScore;
+        } else {
+            console.log("web storage not supported");
+    }
+  }
+  
+  function loadSavedData() {
+    if (typeof(Storage) != "undefined") {
+      if (localStorage.localHighScore) {
+        highScore = Number(localStorage.localHighScore);
+      } else {
+        highScore = 0;
+      }
+    } else {
+      console.log("web storage not supported");
+    }
+  }
+
+  function updateHighscore() {
+    if (scoreValue > highScore) {
+      highScore = scoreValue;
+      saveData();
+    }
   }
   
   function gravity() {
@@ -110,6 +138,7 @@
             console.log("Matched h! " + typeHere);
             ++scoreValue
             score.innerHTML = scoreValue;
+            updateHighscore();
           }
         } else {
           lastSeen = typeHere;
@@ -132,6 +161,9 @@
               matches.push(tileCoordToIndex(c, r-s));
             }
             console.log("Matched v! " + typeHere);
+            ++scoreValue
+            score.innerHTML = scoreValue;
+            updateHighscore();
           }
         } else {
           lastSeen = typeHere;
@@ -182,7 +214,9 @@
 
     // account for the margins, canvas position on page, scroll amount, etc.
     mouseX = evt.clientX - rect.left - root.scrollLeft;
+    // mouseX = Math.round((evt.clientX - rect.left - root.scrollLeft)/(rect.right - rect.left) * canvas.width);
     mouseY = evt.clientY - rect.top - root.scrollTop;
+    // mouseY = Math.round((evt.clientY - rect.top - root.scrollTop)/(rect.bottom - rect.top) * canvas.height);
 
     var tileOverCol = Math.floor(mouseX / TILE_W);
     var tileOverRow = Math.floor(mouseY / TILE_H);    
@@ -198,6 +232,7 @@
   window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
+    loadSavedData();
     
     initInput();
     
