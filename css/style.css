@@ -24,3 +24,13 @@ canvas {
     font-family: monospace;
     line-height: 21px;
 }
+
+.highscore{
+    color: #B6FFC2;
+    position: absolute;
+    top: 17px;
+    right: 68px;
+    font-size: 25px;
+    font-family: monospace;
+    line-height: 21px;
+};
