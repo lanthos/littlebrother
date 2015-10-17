@@ -207,9 +207,15 @@
     var diffC = Math.abs(tileOverPos.c - selectedPos.c);
     var diffR = Math.abs(tileOverPos.r - selectedPos.r)
     if ((diffC < 2 && diffR == 0) || (diffC == 0 && diffR < 2)){
-    var tempPiece = tileGrid[tileOverIdx];
-    tileGrid[tileOverIdx] = tileGrid[selectedIdx]; // put the piece here (overwrite)
-    tileGrid[selectedIdx] = tempPiece; // clear the spot where it was sitting
+      var tempPiece = tileGrid[tileOverIdx];
+      tileGrid[tileOverIdx] = tileGrid[selectedIdx]; // put the piece here (overwrite)
+      tileGrid[selectedIdx] = tempPiece; // clear the spot where it was sitting
+      match3Checker();
+      if (matches.length == 0){
+        tempPiece = tileGrid[tileOverIdx];
+        tileGrid[tileOverIdx] = tileGrid[selectedIdx];
+        tileGrid[selectedIdx] = tempPiece;
+      }
     }
       selectedIdx = -1; // forget selection
     } else {
