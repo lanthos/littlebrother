@@ -217,6 +217,10 @@
     // mouseX = Math.round((evt.clientX - rect.left - root.scrollLeft)/(rect.right - rect.left) * canvas.width);
     mouseY = evt.clientY - rect.top - root.scrollTop;
     // mouseY = Math.round((evt.clientY - rect.top - root.scrollTop)/(rect.bottom - rect.top) * canvas.height);
+    
+    //if mouse is outside canvas, don't highlight
+    if(mouseX < 0 || mouseX > canvas.width - 15)
+      return
 
     var tileOverCol = Math.floor(mouseX / TILE_W);
     var tileOverRow = Math.floor(mouseY / TILE_H);    
