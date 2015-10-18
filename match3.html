@@ -53,7 +53,7 @@
   const TILE_COLS = 8;
   const TILE_ROWS = 8;
   var tileGrid =
-      [ 2, 4, 3, 2, 1, 3, 4, 2,
+      [ 0, 4, 3, 2, 1, 3, 4, 2,
         1, 2, 1, 1, 1, 3, 1, 1,
         0, 0, 2, 0, 0, 1, 0, 0,
         3, 0, 0, 1, 0, 0, 2, 0,
@@ -61,6 +61,10 @@
         0, 0, 2, 0, 0, 4, 0, 0,
         1, 2, 1, 1, 4, 1, 1, 3,
         2, 4, 3, 2, 1, 3, 4, 2];
+  var tileGrid = []
+
+  var tiles = {}
+  var tilesCount = 0;
   
   var img = {}
   const ORANGE = 0;
@@ -116,14 +120,17 @@
     for (var c = 0; c < TILE_COLS; c++){
       for (var r = TILE_ROWS - 1; r >= 0; r--){
         var idxHere = tileCoordToIndex(c, r);
-        var typeHere = tileGrid[idxHere];
-        if(typeHere == BLANK){
+        var tileId = tileGrid[idxHere];
+        if(tileId === undefined)
+          new_tile(r, c)
+        if(!tiles[tileId] || tiles[tileId].Type == BLANK){
           if(r > 0){
             var idxAbove = tileCoordToIndex(c, r-1);
             tileGrid[idxHere] = tileGrid[idxAbove];
-            tileGrid[idxAbove] = typeHere;
+            tileGrid[idxAbove] = BLANK;
           } else {
-            tileGrid[idxHere] = Math.floor(Math.random() * 5);
+            new_tile(r, c)
+            //tileGrid[idxHere] = Math.floor(Math.random() * 5);
           }
         }
       } // end rows
@@ -134,50 +141,52 @@
     var lastSeen = -1;
     var reps = 0;
     for (var r = 0; r < TILE_ROWS; r++){
+      lastSeen = -1;
       for (var c = 0; c < TILE_COLS; c++){
-        var idxHere = tileCoordToIndex(c, r);
-        var typeHere = tileGrid[idxHere];
-        if (typeHere == lastSeen && typeHere != BLANK){
+        var tile = getTile(r, c);
+        if (tile.Type == lastSeen && tile.Type != BLANK){
           reps++;
           if (reps >= 2){
             for (var s = 0; s < 3; s++){
             //   tileGrid[tileCoordToIndex(c-s, r)] = BLANK;
               console.log("tileidx = " + tileCoordToIndex(c-s, r))
-              matches.push(tileCoordToIndex(c-s, r));
+              matches.push(getTile(r, c-s));
             }
-            console.log("Matched h! " + typeHere);
+            console.log("Matched h! " + tile.Type);
             ++scoreValue            
             updateScore();
           }
         } else {
-          lastSeen = typeHere;
+          lastSeen = tile.Type;
           reps = 0;
         } 
       } // end of c
     } // end of r
     lastSeen = -1;
     reps = 0;
+
     for (var c = 0; c < TILE_COLS; c++){
+      lastSeen = -1;
       for (var r = 0; r < TILE_ROWS; r++){
-        var idxHere = tileCoordToIndex(c, r);
-        var typeHere = tileGrid[idxHere];
-        if (typeHere == lastSeen && typeHere != BLANK){
+        var tile = getTile(r, c);
+        if (tile.Type == lastSeen && tile.Type != BLANK){
           reps++;
           if (reps >= 2){
             for (var s = 0; s < 3; s++){
             //   tileGrid[tileCoordToIndex(c, r-s)] = BLANK;
               console.log("tileidx = " + tileCoordToIndex(c, r-s))
-              matches.push(tileCoordToIndex(c, r-s));
+              matches.push(getTile(r-s, c));
             }
-            console.log("Matched v! " + typeHere);
+            console.log("Matched v! " + tile.Type);
             ++scoreValue
             score.innerHTML = scoreValue;
             updateScore();
           }
         } else {
-          lastSeen = typeHere;
+          lastSeen = tile.Type;
           reps = 0;
         } 
+
       } // end of c
     } // end of r
     
@@ -185,10 +194,35 @@
   
   function removeClusters() {
     for (var i = 0; i < matches.length; i++){
-      tileGrid[matches[i]] = BLANK;
+      matches[i].Type = BLANK;
     }
     matches = [];
   }
+
+  function getTile(row, column){
+    gridId = tileCoordToIndex(column, row);
+    tileId = tileGrid[gridId];
+    var temptile = tiles[tileId]
+    if(!temptile)
+      debugger;
+    return temptile;
+  }
+
+
+
+  function new_tile(row, column){
+    ++tilesCount
+    tiles[tilesCount] = {
+      id: tilesCount,
+      Type: Math.floor(Math.random() * 5),
+      row: row, 
+      column: column, 
+      currentPos: 0,
+    }
+    id = tileCoordToIndex(column, row);
+    tileGrid[id] = tilesCount
+  }
+
   
   function idxToCR(idx){
     var col = idx % TILE_COLS;
@@ -254,7 +288,14 @@
     loadSavedData();
     
     initInput();
-    
+    for (var c = 0; c < TILE_COLS; c++){
+      for (var r = TILE_ROWS - 1; r >= 0; r--){
+        var idxHere = tileCoordToIndex(c, r);
+        var tileId = tileGrid[idxHere];
+        if(tileId === undefined)
+          new_tile(r, c)
+      }
+    }
     // these next few lines set up our game logic and render to happen 60 times per second
     var framesPerSecond = 10;
     setInterval(function() {
@@ -288,34 +329,12 @@
 
 
         var idxHere = tileCoordToIndex(eachCol,eachRow);
-        var pieceHere = tileGrid[idxHere];
-
-        var pieceName = "X";
-
-    
-        switch(pieceHere) {
-          case ORANGE:
-            canvasContext.fillStyle = '#F28015';
-            break;
-          case GREEN:
-            canvasContext.fillStyle = '#5DF0A9';
-            break;
-          case BLUE:
-            canvasContext.fillStyle = '#33F0E7';
-            break;
-          case PURPLE:
-            canvasContext.fillStyle = '#580BD6';
-            break;
-          case PINK:
-            canvasContext.fillStyle = '#F81FB8';
-            break;
-      case BLANK:
-        pieceName = "";
-      break;
-        }
+        var tileId = tileGrid[idxHere];
+        var pieceHere = tiles[tileId];
 
 
-        canvasContext.drawImage(img[pieceHere], tileLeftEdgeX + 11, tileTopEdgeY + 11);
+
+        canvasContext.drawImage(img[pieceHere.Type], tileLeftEdgeX + 11, tileTopEdgeY + 11);
 
 
         // not a super efficient way to do this, but c'mon, it's a boardgame!
