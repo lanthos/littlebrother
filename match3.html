@@ -46,6 +46,8 @@
   var highScoreValue = 0;
   var score = document.getElementById("score");
   var highScore = document.getElementById("highscore")
+  var noMatchSound = new Audio('sounds/no_match.mp3');
+  var yesMatchSound = new Audio('sounds/yes_match.mp3');
   
   const TILE_W = 75;
   const TILE_H = 75;
@@ -244,7 +246,10 @@
       swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
       match3Checker();
       if (matches.length == 0){
+        noMatchSound.play();
         swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
+      } else {
+        yesMatchSound.play();
       }
     }
       selectedIdx = -1; // forget selection
