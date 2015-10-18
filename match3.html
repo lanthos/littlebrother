@@ -238,7 +238,7 @@
       Type: Math.floor(Math.random() * 5),
       row: row, 
       column: column, 
-      currentPos: 0,
+      y: 0,
     }
     id = tileCoordToIndex(column, row);
     tileGrid[id] = tilesCount
@@ -322,7 +322,7 @@
       }
     }
     // these next few lines set up our game logic and render to happen 60 times per second
-    var framesPerSecond = 1;
+    var framesPerSecond = 4;
     setInterval(function() {
       gravity();
       drawEverything();
@@ -358,9 +358,15 @@
         var tileId = tileGrid[idxHere];
         var pieceHere = tiles[tileId];
 
-        
+        if(pieceHere.y != tileTopEdgeY + 11){
+          pieceHere.y += 10
+        }
 
-        canvasContext.drawImage(img[pieceHere.Type], tileLeftEdgeX + 11, tileTopEdgeY + 11);
+        if(pieceHere.y > tileTopEdgeY + 11){
+          pieceHere.y = tileTopEdgeY + 11;
+        }
+
+        canvasContext.drawImage(img[pieceHere.Type], tileLeftEdgeX + 11, pieceHere.y);
         canvasContext.fillStyle = 'white';
         canvasContext.fillText(eachRow + ", " + eachCol , tileLeftEdgeX+TILE_W/2, tileTopEdgeY+TILE_H);
 
