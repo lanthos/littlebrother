@@ -127,13 +127,19 @@
         var tileId = tileGrid[idxHere];
         if(tileId === undefined)
           new_tile(r, c)
+
         if(!tiles[tileId] || tiles[tileId].Type == BLANK){
           if(r > 0){
+
             var idxAbove = tileCoordToIndex(c, r-1);
+
             tileGrid[idxHere] = tileGrid[idxAbove];
-            tileGrid[idxAbove] = BLANK;
+            tiles[tileGrid[idxHere]].row = r-1;
+
+            tileGrid[idxAbove] = null;
           } else {
             new_tile(r, c)
+            //tiles[tileId] = null
             //tileGrid[idxHere] = Math.floor(Math.random() * 5);
           }
         }
@@ -153,16 +159,22 @@
           reps = 0
           break
         }
+        var tileLeftEdgeX = (c-s) * TILE_W ;
+        var tileTopEdgeY = r * TILE_H;
+        outlineRect(tileLeftEdgeX, tileTopEdgeY, TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'red' );
 
         if (tile.Type == lastSeen && tile.Type != BLANK){
+
           reps++;
           if (reps >= 2){
             for (var s = 0; s < 3; s++){
+
             //   tileGrid[tileCoordToIndex(c-s, r)] = BLANK;
               console.log("tileidx = " + tileCoordToIndex(c-s, r))
               var tileLeftEdgeX = (c-s) * TILE_W ;
               var tileTopEdgeY = r * TILE_H;
               outlineRect(tileLeftEdgeX, tileTopEdgeY, TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'red' );
+
               matches.push(getTile(r, c-s));
             }
             console.log("Matched h! " + tile.Type);
@@ -182,15 +194,16 @@
       lastSeen = -1;
       for (var r = 0; r < TILE_ROWS; r++){
         var tile = getTile(r, c);
+
         if(isFalling(tile)){
           lastSeen =-1
           reps = 0
           break
         }
-          
         if (tile.Type == lastSeen && tile.Type != BLANK){
           reps++;
           if (reps >= 2){
+
             for (var s = 0; s < 3; s++){
               var tileLeftEdgeX = c * TILE_W ;
               var tileTopEdgeY = (r -s) * TILE_H;
@@ -213,10 +226,23 @@
     
   } // end of function
   function isFalling(tile){
-    for(var r = tile.row; r < TILE_ROWS; r++){
-      if(getTile(r, tile.column).Type == BLANK){
-        return true;
+      
+      var y = tile.row * TILE_H + 11;
+      if(tile.y - y != 0){
+        outlineRect(tile.column * TILE_W, tile.y,
+                   TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'blue' );
+        return true
       }
+    for (var r = TILE_ROWS - 1; r >= 0; r--){
+      var item = getTile(r, tile.column);
+      var y = item.row  * TILE_H + 11;
+
+      if(item.Type == BLANK || item.y - y  > 11){
+        
+        outlineRect(item.column * TILE_W, item.y,
+                   TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'orange' );
+        return true;
+      } 
     }
     return false;
   }
@@ -247,9 +273,9 @@
       Type: Math.floor(Math.random() * 5),
       row: row, 
       column: column, 
-      y: 0 - TILE_H,
+      y: 0 - (row * TILE_H + 11),
     }
-    id = tileCoordToIndex(column, row);
+    var id = tileCoordToIndex(column, row);
     tileGrid[id] = tilesCount
   }
 
@@ -263,9 +289,19 @@
   function swap (tile1, tile2) {
     tileGrid[selectedIdx] = tile1;
     tileGrid[tileOverIdx] = tile2;
-  }
+    tiles[tile1].y = tiles[tile1].row * TILE_H + 11;
+    tiles[tile2].y = tiles[tile2].row * TILE_H + 11;
 
+    var tileOverPos = idxToCR(tileOverIdx);
+    var selectedPos = idxToCR(selectedIdx);
+    tiles[tile1].column = tileOverPos.c;
+    tiles[tile1].row = tileOverPos.r;
+    tiles[tile2].column = selectedPos.c;
+    tiles[tile2].row = selectedPos.r;
+  }
+var clicked = false
   function mouseclicked(evt) {
+    clicked = true
     if(tileOverIdx < 0 || tileOverIdx >= tileGrid.length) { // invalid or off board
       return;
     }
@@ -277,7 +313,9 @@
     var diffR = Math.abs(tileOverPos.r - selectedPos.r)
     if ((diffC < 2 && diffR == 0) || (diffC == 0 && diffR < 2)){
       swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
+    
       match3Checker();
+      drawTiles() 
       if (matches.length == 0){
         playSound(noMatchSound);
         swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
@@ -289,6 +327,7 @@
     } else {
       selectedIdx = tileOverIdx;
     }
+    clicked = false
   }
 
   function mousemoved(evt) {
@@ -328,10 +367,11 @@
         var tileId = tileGrid[idxHere];
         if(tileId === undefined)
           new_tile(r, c)
+          tiles[tilesCount].y = tiles[tilesCount].row * TILE_H + 11;
       }
     }
     // these next few lines set up our game logic and render to happen 60 times per second
-    var framesPerSecond = 4;
+    var framesPerSecond = 10;
     setInterval(function() {
       gravity();
       drawEverything();
@@ -357,6 +397,8 @@
   }
   
   function drawTiles() {
+    canvasContext.fillStyle = 'white';
+    var tilesDrawn = 0
     for(var eachCol=0; eachCol<TILE_COLS; eachCol++) {
       for(var eachRow=0; eachRow<TILE_ROWS; eachRow++) {
         var tileLeftEdgeX = eachCol * TILE_W ;
@@ -366,18 +408,26 @@
         var idxHere = tileCoordToIndex(eachCol,eachRow);
         var tileId = tileGrid[idxHere];
         var pieceHere = tiles[tileId];
+        pieceHere.row = eachRow;
+        pieceHere.column = eachCol;
+        var x = tileLeftEdgeX + 11
 
         if(pieceHere.y != tileTopEdgeY + 11){
           pieceHere.y += 10
         }
 
         if(pieceHere.y > tileTopEdgeY + 11){
-          pieceHere.y = tileTopEdgeY + 11;
+          pieceHere.y = eachRow * TILE_H + 11;
         }
 
-        canvasContext.drawImage(img[pieceHere.Type], tileLeftEdgeX + 11, pieceHere.y);
-        canvasContext.fillStyle = 'white';
+        if (pieceHere.Type == 5)
+          x += 20;
+        tilesDrawn++;
+        canvasContext.drawImage(img[pieceHere.Type], x, pieceHere.y);
+        //debug info
         canvasContext.fillText(eachRow + ", " + eachCol , tileLeftEdgeX+TILE_W/2, tileTopEdgeY+TILE_H);
+
+        canvasContext.fillText(pieceHere.y , x +TILE_W/2 , pieceHere.y +TILE_H/ 2);
 
 
         // not a super efficient way to do this, but c'mon, it's a boardgame!
@@ -393,6 +443,7 @@
         }
       } // end of for eachRow
     } // end of for eachCol
+    console.log(tilesDrawn)
   } // end of drawTiles()
   
   function drawEverything() {
