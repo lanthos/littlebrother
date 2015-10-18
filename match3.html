@@ -142,6 +142,9 @@
             for (var s = 0; s < 3; s++){
             //   tileGrid[tileCoordToIndex(c-s, r)] = BLANK;
               console.log("tileidx = " + tileCoordToIndex(c-s, r))
+              var tileLeftEdgeX = (c-s) * TILE_W ;
+              var tileTopEdgeY = r * TILE_H;
+              outlineRect(tileLeftEdgeX, tileTopEdgeY, TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'red' );
               matches.push(getTile(r, c-s));
             }
             console.log("Matched h! " + tile.Type);
@@ -290,12 +293,13 @@
       }
     }
     // these next few lines set up our game logic and render to happen 60 times per second
-    var framesPerSecond = 10;
+    var framesPerSecond = 1;
     setInterval(function() {
       gravity();
+      drawEverything();
       match3Checker();
       removeClusters();
-      drawEverything();
+      
     }, 1000/framesPerSecond);
 
     canvasContext.font="12px Arial";
@@ -325,9 +329,11 @@
         var tileId = tileGrid[idxHere];
         var pieceHere = tiles[tileId];
 
-
+        
 
         canvasContext.drawImage(img[pieceHere.Type], tileLeftEdgeX + 11, tileTopEdgeY + 11);
+        canvasContext.fillStyle = 'white';
+        canvasContext.fillText(eachRow + ", " + eachCol , tileLeftEdgeX+TILE_W/2, tileTopEdgeY+TILE_H);
 
 
         // not a super efficient way to do this, but c'mon, it's a boardgame!
