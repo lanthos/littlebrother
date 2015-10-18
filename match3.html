@@ -46,6 +46,7 @@
   var highScoreValue = 0;
   var score = document.getElementById("score");
   var highScore = document.getElementById("highscore")
+  var mute = false;
   var noMatchSound = new Audio('sounds/no_match.mp3');
   var yesMatchSound = new Audio('sounds/yes_match.mp3');
   var loseSound = new Audio('sounds/lose_sound.mp3');
@@ -270,10 +271,14 @@
       swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
       match3Checker();
       if (matches.length == 0){
-        noMatchSound.play();
+        if (!mute){
+          noMatchSound.play();
+        }
         swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
       } else {
-        yesMatchSound.play();
+        if(!mute) {
+          yesMatchSound.play();
+        }
       }
     }
       selectedIdx = -1; // forget selection
