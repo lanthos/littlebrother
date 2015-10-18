@@ -112,6 +112,14 @@
     }
   }
   
+  function playSound(sound) {
+    if (!mute){
+      sound.play();
+    } else {
+      return;
+    }
+  }
+  
   function gravity() {
     for (var c = 0; c < TILE_COLS; c++){
       for (var r = TILE_ROWS - 1; r >= 0; r--){
@@ -271,14 +279,10 @@
       swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
       match3Checker();
       if (matches.length == 0){
-        if (!mute){
-          noMatchSound.play();
-        }
+        playSound(noMatchSound);
         swap(tileGrid[tileOverIdx], tileGrid[selectedIdx]);
       } else {
-        if(!mute) {
-          yesMatchSound.play();
-        }
+        playSound(yesMatchSound);
       }
     }
       selectedIdx = -1; // forget selection
