@@ -139,6 +139,12 @@
       lastSeen = -1;
       for (var c = 0; c < TILE_COLS; c++){
         var tile = getTile(r, c);
+        if(isFalling(tile)){
+          lastSeen =-1
+          reps = 0
+          break
+        }
+
         if (tile.Type == lastSeen && tile.Type != BLANK){
           reps++;
           if (reps >= 2){
@@ -167,11 +173,19 @@
       lastSeen = -1;
       for (var r = 0; r < TILE_ROWS; r++){
         var tile = getTile(r, c);
+        if(isFalling(tile)){
+          lastSeen =-1
+          reps = 0
+          break
+        }
+          
         if (tile.Type == lastSeen && tile.Type != BLANK){
           reps++;
           if (reps >= 2){
             for (var s = 0; s < 3; s++){
-            //   tileGrid[tileCoordToIndex(c, r-s)] = BLANK;
+              var tileLeftEdgeX = c * TILE_W ;
+              var tileTopEdgeY = (r -s) * TILE_H;
+              outlineRect(tileLeftEdgeX, tileTopEdgeY, TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'red' );
               console.log("tileidx = " + tileCoordToIndex(c, r-s))
               matches.push(getTile(r-s, c));
             }
@@ -189,7 +203,15 @@
     } // end of r
     
   } // end of function
-  
+  function isFalling(tile){
+    for(var r = tile.row; r < TILE_ROWS; r++){
+      if(getTile(r, tile.column).Type == BLANK){
+        return true;
+      }
+    }
+    return false;
+  }
+
   function removeClusters() {
     for (var i = 0; i < matches.length; i++){
       matches[i].Type = BLANK;
