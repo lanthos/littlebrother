@@ -172,7 +172,7 @@
       start_time = new Date();
     }
     if(elapsed_time > levelTime) {
-      loseSound.play();
+      playSound(loseSound);
       scoreValue = 0;
       updateScore();
       generateBoard();
