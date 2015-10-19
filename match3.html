@@ -37,15 +37,30 @@
 </div>
 </body>
 <script>
+  
+  // misc vars
   var mouseX = 0;
   var mouseY = 0;
   var selectedIdx = -1;
   var tileOverIdx = -1;
   var matches = [];
+  
+  // match time
+  var start_time = 0;
+  var levelTime = 60;
+  
+  // score vars
+  var levelScoreMultiplier = 50;
   var scoreValue = 0;
   var highScoreValue = 0;
+  var currentLevel = 1;
+  var highestLevelValue = 1;
+  var level = document.getElementById("level");
+  var highestLevel = document.getElementById("highestlevel");
   var score = document.getElementById("score");
   var highScore = document.getElementById("highscore")
+  
+  //sound vars
   var mute = false;
   var noMatchSound = new Audio('sounds/no_match.mp3');
   var yesMatchSound = new Audio('sounds/yes_match.mp3');
@@ -84,6 +99,7 @@
   function saveData() {
     if(typeof(Storage) != "undefined") {
             localStorage.localHighScore = highScoreValue;
+            localStorage.localHighestLevel = highestLevelValue;
         } else {
             console.log("web storage not supported");
     }
@@ -97,6 +113,11 @@
       } else {
         highScoreValue = 0;
       }
+      if (localStorage.localHighestLevel) {
+        highestLevel.innerHTML = Number(localStorage.localHighestLevel);        
+      } else {
+        highestLevel.innerHTML = currentLevel;
+      }
     } else {
       console.log("web storage not supported");
     }
@@ -104,7 +125,13 @@
 
   function updateScore() {
     score.innerHTML = scoreValue;
-
+    
+    if(currentLevel > highestLevelValue) {
+      highestLevelValue = currentLevel;
+      highestLevel.innerHTML = highestLevelValue;
+      saveData();
+    }
+    
     if (scoreValue > highScoreValue) {
       highScoreValue = scoreValue;
       highScore.innerHTML = highScoreValue;
@@ -117,6 +144,38 @@
       sound.play();
     } else {
       return;
+    }
+  }
+  
+  function generateBoard(){
+    for (var c = 0; c < TILE_COLS; c++){
+      for (var r = TILE_ROWS - 1; r >= 0; r--){
+        var idxHere = tileCoordToIndex(c, r);
+        var tileId = tileGrid[idxHere];
+        if(tileId === undefined)
+          new_tile(r, c)
+          tiles[tilesCount].y = tiles[tilesCount].row * TILE_H + 11;
+      } // end r
+    }  // end c
+  } // end function
+  
+  function checkWin(){
+    var now = new Date();
+    var elapsed_time = ((start_time - now) / 1000) * -1;
+    // console.log(elapsed_time);
+    if(scoreValue >= currentLevel * levelScoreMultiplier){
+      currentLevel += 1;
+      level.innerHTML = currentLevel;
+      scoreValue = 0;
+      updateScore();
+      generateBoard();
+      start_time = new Date();
+    }
+    if(elapsed_time > levelTime) {
+      scoreValue = 0;
+      updateScore();
+      generateBoard();
+      start_time = new Date();
     }
   }
   
@@ -171,7 +230,7 @@
             for (var s = 0; s < 3; s++){
 
             //   tileGrid[tileCoordToIndex(c-s, r)] = BLANK;
-              console.log("tileidx = " + tileCoordToIndex(c-s, r))
+              // console.log("tileidx = " + tileCoordToIndex(c-s, r))
               var tileLeftEdgeX = (c-s) * TILE_W ;
               var tileTopEdgeY = r * TILE_H;
               //debug stuff
@@ -179,7 +238,7 @@
 
               matches.push(getTile(r, c-s));
             }
-            console.log("Matched h! " + tile.Type);
+            // console.log("Matched h! " + tile.Type);
             ++scoreValue            
             updateScore();
           }
@@ -213,7 +272,7 @@
               console.log("tileidx = " + tileCoordToIndex(c, r-s))
               matches.push(getTile(r-s, c));
             }
-            console.log("Matched v! " + tile.Type);
+            // console.log("Matched v! " + tile.Type);
             ++scoreValue
             score.innerHTML = scoreValue;
             updateScore();
@@ -338,9 +397,7 @@ var clicked = false
 
     // account for the margins, canvas position on page, scroll amount, etc.
     mouseX = evt.clientX - rect.left - root.scrollLeft;
-    // mouseX = Math.round((evt.clientX - rect.left - root.scrollLeft)/(rect.right - rect.left) * canvas.width);
     mouseY = evt.clientY - rect.top - root.scrollTop;
-    // mouseY = Math.round((evt.clientY - rect.top - root.scrollTop)/(rect.bottom - rect.top) * canvas.height);
     
     //if mouse is outside canvas, don't highlight
     if(mouseX < 0 || mouseX > canvas.width - 15)
@@ -361,17 +418,9 @@ var clicked = false
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
     loadSavedData();
-    
+    start_time = new Date();
     initInput();
-    for (var c = 0; c < TILE_COLS; c++){
-      for (var r = TILE_ROWS - 1; r >= 0; r--){
-        var idxHere = tileCoordToIndex(c, r);
-        var tileId = tileGrid[idxHere];
-        if(tileId === undefined)
-          new_tile(r, c)
-          tiles[tilesCount].y = tiles[tilesCount].row * TILE_H + 11;
-      }
-    }
+    generateBoard();
     // these next few lines set up our game logic and render to happen 60 times per second
     var framesPerSecond = 10;
     setInterval(function() {
@@ -379,6 +428,7 @@ var clicked = false
       drawEverything();
       match3Checker();
       removeClusters();
+      checkWin();
       
     }, 1000/framesPerSecond);
 
@@ -444,7 +494,7 @@ var clicked = false
         }
       } // end of for eachRow
     } // end of for eachCol
-    console.log(tilesDrawn)
+    // console.log(tilesDrawn)
   } // end of drawTiles()
   
   function drawEverything() {
