@@ -65,6 +65,7 @@
   var noMatchSound = new Audio('sounds/no_match.mp3');
   var yesMatchSound = new Audio('sounds/yes_match.mp3');
   var loseSound = new Audio('sounds/lose_sound.mp3');
+  var winSound = new Audio('sounds/win_sound.mp3');
   
   const TILE_W = 75;
   const TILE_H = 75;
@@ -164,6 +165,7 @@
     var elapsed_time = ((start_time - now) / 1000) * -1;
     // console.log(elapsed_time);
     if(scoreValue >= currentLevel * levelScoreMultiplier){
+      playSound(winSound);
       currentLevel += 1;
       level.innerHTML = currentLevel;
       scoreValue = 0;
