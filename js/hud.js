@@ -12,12 +12,12 @@ HUD.initialize = function (container){
   this.highScoreElem = container.querySelector("#highscore");
   this.timeLeftElem = container.querySelector("#timeleft");
 
-  if (typeof Storage !== "undefined"){
+  if (typeof Storage === "undefined"){
     console.log('Web Storage is not supported. Progress will not be saved');
     return this;
   }
   if (localStorage.localHighScore) {
-    this.highScoreValue = Number(localStorage.localHighScore);
+    this.highScoreValue = parseInt(localStorage.localHighScore);
   } else {
     this.highScoreValue = 0;
   }
@@ -48,9 +48,10 @@ HUD.updateTime = function(time){
 HUD.updateScore = function (newScore, newLevel) {
   'use strict';
   this.scoreElem.innerHTML = newScore;
+  console.log(newScore, this.highScoreValue);
   if (newScore > this.highScoreValue) {
     this.highScoreValue = newScore;
-    this.highScore.innerHTML = newScore;
+    this.highScoreElem.innerHTML = newScore;
     this.saveData();
   }
 
