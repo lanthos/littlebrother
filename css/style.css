@@ -1,18 +1,18 @@
 canvas {
-	margin: 0 auto;
+  margin: 0 auto;
     display: block;
     background-color: #2F2F2E;
     padding: 10px;
 }
 
 .header > .wrapper {
-	margin: 0 auto;
+  margin: 0 auto;
     display: flex;
     width: 632px;
 }
 
 .relative{
-	position: relative;
+  position: relative;
 }
 
 .score {
@@ -33,4 +33,13 @@ canvas {
     font-size: 25px;
     font-family: monospace;
     line-height: 21px;
-};
+}
+
+#game-container{
+  color:#FFF;
+  text-align:center;
+}
+
+#game-container>*{
+  margin: 0px auto;
+}
