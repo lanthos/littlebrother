@@ -7,5 +7,11 @@ var Helpers = {
     } else {
       return;
     }
+  },
+  generateNode: function(html){
+    'use strict';
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    return d.firstChild;
   }
 };

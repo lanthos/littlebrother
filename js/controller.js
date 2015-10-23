@@ -20,13 +20,11 @@ Controller.mainMenu = function(){
 
 Controller.lose = function(){
   'use strict';
-  this.clearChildren();
   LoseScene(this.container);
 };
 
 Controller.win = function(){
   'use strict';
-  this.clearChildren();
   WinScene(this.container);
 };
 
