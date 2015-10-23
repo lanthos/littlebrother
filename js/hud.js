@@ -47,12 +47,13 @@ HUD.updateTime = function(time){
 
 HUD.updateScore = function (newScore, newLevel) {
   'use strict';
-  this.scoreElem.innerHTML = newScore;
-  console.log(newScore, this.highScoreValue);
-  if (newScore > this.highScoreValue) {
-    this.highScoreValue = newScore;
-    this.highScoreElem.innerHTML = newScore;
-    this.saveData();
+  if(typeof newScore !== 'undefined'){
+    this.scoreElem.innerHTML = newScore;
+    if (newScore > this.highScoreValue) {
+      this.highScoreValue = newScore;
+      this.highScoreElem.innerHTML = newScore;
+      this.saveData();
+    }
   }
 
   if(typeof newLevel !== 'undefined'){

@@ -77,7 +77,6 @@ InGame.initialize = function(container, level){
   var framesPerSecond = 10;
   var interval = setInterval(function() {
     gravity();
-    this.render();
     match3Checker();
     this.removeClusters();
     this.render();
