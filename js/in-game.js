@@ -19,6 +19,7 @@ var scoreValue = 0;
 //sound vars
 var noMatchSound = new Audio('sounds/no_match.mp3');
 var yesMatchSound = new Audio('sounds/yes_match.mp3');
+var dropSound = new Audio('sounds/drop_sound.mp3');
 
 const TILE_W = 75;
 const TILE_H = 75;
@@ -187,6 +188,7 @@ gravity = function() {
 
           tileGrid[idxAbove] = null;
         } else {
+          Helpers.playSound(dropSound);
           new_tile(r, c);
           //tiles[tileId] = null
           //tileGrid[idxHere] = Math.floor(Math.random() * 5);
