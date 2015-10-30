@@ -14,6 +14,7 @@ var levelTime = 60;
 
 // score vars
 var levelScoreMultiplier = 50;
+var scoreMultiplier = 2; // this is for beefing up scoring to make people feel awesome
 var scoreValue = 0;
 
 //sound vars
@@ -232,7 +233,7 @@ match3Checker = function (){
             matches.push(getTile(r, c-s));
           }
           // console.log("Matched h! " + tile.Type);
-          HUD.updateScore(++scoreValue);
+          HUD.updateScore(scoreValue += (1 * scoreMultiplier));
         }
       } else {
         lastSeen = tile.Type;
@@ -265,7 +266,7 @@ match3Checker = function (){
             matches.push(getTile(r-s, c));
           }
           // console.log("Matched v! " + tile.Type);
-          HUD.updateScore(++scoreValue);
+          HUD.updateScore(scoreValue += (1 * scoreMultiplier));
         }
       } else {
         lastSeen = tile.Type;
