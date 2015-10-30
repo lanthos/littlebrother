@@ -13,7 +13,7 @@ var matches = [];
 var levelTime = 60;
 
 // score vars
-var levelScoreMultiplier = 50;
+var levelScoreMultiplier = 25;
 var scoreMultiplier = 2; // this is for beefing up scoring to make people feel awesome
 var scoreValue = 0;
 
