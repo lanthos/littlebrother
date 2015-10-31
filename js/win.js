@@ -1,9 +1,10 @@
 /* global Controller, HUD, Helpers */
 
 var winSound = new Audio('sounds/win_sound.mp3');
-var storyBits = {2:"Walls and haystacks. That's all the Storied history of codes and secrets have amounted to. Just walls and haystacks.", 
-5:"Rivers of redacted pages, ink upon ink, blood after blood. We've always known of the monster under the bed.", 
-6:"Always seen through the lies told to comfort, told to Protect. But the lies hide more than the monster."}
+var storyBits = {2:'Walls and haystacks.<br></<br> That\'s all the <b>Storied</b> history of codes and <span class="strike">secrets</span> have amounted to.<br></<br> Just walls and haystacks.', 
+5:'Rivers of redacted pages, ink upon ink, <span class="red">blood</span> after <span class="red">blood</span>.<br></<br> We\'ve always known of the monster under the bed.', 
+6:'<span class="strike">Always</span> seen through the <span class="under">lies told to comfort</span>, told to <span class="strike">Protect</span>. But the lies hide more than the monster.<br></br> They keep us from wondering what it\'s hiding <i>from</i>.',
+11:'Information reigns over an empty <span class="strike">Kingdom</span>.<br></br>The subversive truth, our rumpelstiltskin - <br></br>To learn its name is to <b>steal away</b> its <span class="under">power<span>.'}
 
 function WinScene(container){
   'use strict';

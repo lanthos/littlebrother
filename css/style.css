@@ -46,12 +46,23 @@ canvas {
   margin: 0px auto;
 }
 
+.red {
+  color: red;
+}
+
+.strike{
+  text-decoration: line-through;
+}
+
+.under{
+  text-decoration: underline;
+}
 
 .temp-menu {
   position:absolute;
   top:0px;
   left:0px;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.8);
 }
 
 .center-parent{
@@ -62,4 +73,5 @@ canvas {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
+  font-size: 12px;
 }
