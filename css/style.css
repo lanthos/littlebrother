@@ -22,17 +22,27 @@ canvas {
     left: 22px;
     font-size: 25px;
     font-family: monospace;
+    line-height: 25px;
+}
+
+.timer {
+    color: #B6FFC2;
+    position: absolute;
+    bottom: 22px;
+    right: 122px;
+    font-size: 25px;
+    font-family: monospace;
     line-height: 21px;
 }
 
 .highscore{
     color: #B6FFC2;
     position: absolute;
-    top: 17px;
-    right: 68px;
+    top: 40px;
+    right: 48px;
     font-size: 25px;
     font-family: monospace;
-    line-height: 21px;
+    line-height: 25px;
 }
 
 #game-container{
