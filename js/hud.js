@@ -48,6 +48,9 @@ HUD.updateTime = function(time){
 HUD.updateScore = function (newScore, newLevel) {
   'use strict';
   if(typeof newScore !== 'undefined'){
+    if(newScore > 999999){
+      newScore = 999999;
+    }
     this.scoreElem.innerHTML = newScore;
     if (newScore > this.highScoreValue) {
       this.highScoreValue = newScore;

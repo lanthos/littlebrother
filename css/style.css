@@ -18,8 +18,8 @@ canvas {
 .score {
     color: #B6FFC2;
     position: absolute;
-    bottom: 22px;
-    left: 22px;
+    bottom: 25px;
+    left: 35px;
     font-size: 25px;
     font-family: monospace;
     line-height: 25px;
@@ -28,11 +28,12 @@ canvas {
 .timer {
     color: #B6FFC2;
     position: absolute;
-    bottom: 22px;
-    right: 122px;
+    bottom: 50px;
+    left: 322px;
     font-size: 25px;
     font-family: monospace;
     line-height: 21px;
+    text-align: left;
 }
 
 .highscore{

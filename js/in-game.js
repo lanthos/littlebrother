@@ -13,8 +13,8 @@ var matches = [];
 var levelTime = 60;
 
 // score vars
-var levelScoreMultiplier = 25;
-var scoreMultiplier = 2; // this is for beefing up scoring to make people feel awesome
+var levelScoreMultiplier = 600;
+var scoreMultiplier = 60; // this is for beefing up scoring to make people feel awesome
 var scoreValue = 0;
 
 //sound vars
@@ -105,7 +105,7 @@ InGame.checkFinished = function(){
   var now = new Date();
   var elapsed_time = (now - this.start_time) / 1000;
   // console.log(elapsed_time);
-  HUD.updateTime(levelTime - elapsed_time);
+  HUD.updateTime(Math.round(levelTime - elapsed_time));
   if(scoreValue >= this.currentLevel * levelScoreMultiplier){
     Controller.win();
     return true; // we should stop our loop
