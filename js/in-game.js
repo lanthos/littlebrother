@@ -10,11 +10,12 @@ var tileOverIdx = -1;
 var matches = [];
 
 // match time
-var levelTime = 60;
+var baseLevelTime = 60;
+var levelTime = baseLevelTime;
 
 // score vars
-var levelScoreMultiplier = 600;
-var scoreMultiplier = 60; // this is for beefing up scoring to make people feel awesome
+var levelScoreMultiplier = 350;
+var scoreMultiplier = 6; // this is for beefing up scoring to make people feel awesome
 var scoreValue = 0;
 
 //sound vars
@@ -64,6 +65,9 @@ InGame.initialize = function(container, level){
 
   // setup game structure
   this.currentLevel = level;
+  if(level > 1){
+    levelTime *= 1.5;
+  }
   this.start_time = new Date();
   for (var c = 0; c < TILE_COLS; c++){
     for (var r = TILE_ROWS - 1; r >= 0; r--){
