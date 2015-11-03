@@ -11,6 +11,7 @@ HUD.initialize = function (container){
   this.scoreElem = container.querySelector("#score");
   this.highScoreElem = container.querySelector("#highscore");
   this.timeLeftElem = container.querySelector("#timeleft");
+  this.targetScore = container.querySelector("#targetscore");
 
   if (typeof Storage === "undefined"){
     console.log('Web Storage is not supported. Progress will not be saved');

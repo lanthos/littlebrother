@@ -25,6 +25,16 @@ canvas {
     line-height: 25px;
 }
 
+.button {
+    color: #B6FFC2;
+    position: absolute;
+    bottom: 25px;
+    left: 35px;
+    font-size: 25px;
+    font-family: monospace;
+    line-height: 25px;
+}
+
 .timer {
     color: #B6FFC2;
     position: absolute;
@@ -32,7 +42,7 @@ canvas {
     left: 322px;
     font-size: 25px;
     font-family: monospace;
-    line-height: 21px;
+    line-height: 25px;
     text-align: left;
 }
 
@@ -73,4 +83,8 @@ canvas {
   text-align: center;
   vertical-align: middle;
   font-size: 12px;
+}
+
+.center-parent>.centered>.credits {
+  line-height: 55px;
 }
