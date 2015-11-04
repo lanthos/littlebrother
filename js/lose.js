@@ -1,6 +1,6 @@
 /* global Controller, Helpers, HUD */
 
-var loseSound = new Audio('sounds/lose_sound.mp3');
+var loseSound = new Audio('sounds/lose_sound'+ Controller.audioFormat);
 
 function LoseScene(container){
   'use strict';

@@ -1,6 +1,7 @@
 /* global HUD, InGame, WinScene, LoseScene*/
 
 var Controller = {};
+var audioFormat;
 
 Controller.initialize = function(container){
   'use strict';
@@ -41,3 +42,13 @@ Controller.clearChildren = function(){
     cont.removeChild(cont.firstChild);
   }
 };
+
+Controller.soundFormat = function() {
+  var audio = new Audio();
+  if (audio.canPlayType("audio/mp3")){
+    this.audioFormat = ".mp3";
+  } else {
+    this.audioFormat = ".ogg";
+  }
+  return this.audioFormat;
+}

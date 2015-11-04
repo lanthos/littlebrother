@@ -1,6 +1,6 @@
 /* global Controller, HUD, Helpers */
 
-var winSound = new Audio('sounds/win_sound.mp3');
+var winSound = new Audio('sounds/win_sound'+ Controller.audioFormat);
 var storyBits = {5:"Walls and haystacks.<br></br> That's all the Storied history of codes and secrets have amounted to.<br></br> Just walls and haystacks.", 
 10:"Rivers of redacted pages, ink upon ink, blood after blood.<br></br>We've always known of the monster under the bed.", 
 15:"Always seen through the lies told to comfort, told to Protect. But the lies hide more than the monster.<br></br> They keep us from wondering what it's hiding <i>from</i>.",

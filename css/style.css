@@ -83,8 +83,5 @@ canvas {
   text-align: center;
   vertical-align: middle;
   font-size: 12px;
-}
-
-.center-parent>.centered>.credits {
-  line-height: 55px;
+  line-height: 25px;
 }

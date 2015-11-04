@@ -19,9 +19,12 @@ var scoreMultiplier = 6; // this is for beefing up scoring to make people feel a
 var scoreValue = 0;
 
 //sound vars
-var noMatchSound = new Audio('sounds/no_match.mp3');
-var yesMatchSound = new Audio('sounds/yes_match.mp3');
-var dropSound = new Audio('sounds/drop_sound.mp3');
+audioFormat = Controller.soundFormat();
+var noMatchSound = new Audio('sounds/no_match'+ audioFormat);
+var yesMatchSound = new Audio('sounds/yes_match'+ audioFormat);
+var dropSound = new Audio('sounds/drop_sound'+ audioFormat);
+var backgroundMusic = new Audio('sounds/background'+ audioFormat);
+backgroundMusic.loop = true;
 
 const TILE_W = 75;
 const TILE_H = 75;
@@ -93,7 +96,7 @@ InGame.initialize = function(container, level){
   }.bind(this), 1000/framesPerSecond);
 
   this.canvas.font="12px Arial";
-
+  Helpers.playSound(backgroundMusic);
 };
 
 InGame.removeClusters = function(){
@@ -267,7 +270,7 @@ match3Checker = function (){
             var tileLeftEdgeX = c * TILE_W ;
             var tileTopEdgeY = (r -s) * TILE_H;
             Draw.outlineRect(tileLeftEdgeX, tileTopEdgeY, TILE_W - TILE_GAP, TILE_H - TILE_GAP, 'red' );
-            console.log("tileidx = " + tileCoordToIndex(c, r-s))
+            // console.log("tileidx = " + tileCoordToIndex(c, r-s))
             matches.push(getTile(r-s, c));
           }
           // console.log("Matched v! " + tile.Type);
