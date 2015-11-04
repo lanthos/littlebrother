@@ -10,6 +10,7 @@ Controller.initialize = function(container){
   }
   this.container = container;
   this.level = 1;
+  this.mute = false;
   HUD.updateScore(0, 1);
 };
 

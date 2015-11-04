@@ -2,7 +2,7 @@
 var Helpers = {
   playSound: function(sound){
     'use strict';
-    if (!this.mute){
+    if (!Controller.mute){
       sound.play();
     } else {
       return;

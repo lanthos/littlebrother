@@ -25,6 +25,7 @@ var yesMatchSound = new Audio('sounds/yes_match'+ audioFormat);
 var dropSound = new Audio('sounds/drop_sound'+ audioFormat);
 var backgroundMusic = new Audio('sounds/background'+ audioFormat);
 backgroundMusic.loop = true;
+backgroundMusic.volume = 0.4;
 
 const TILE_W = 75;
 const TILE_H = 75;
@@ -66,6 +67,8 @@ InGame.initialize = function(container, level){
   this.canvas.addEventListener("mousemove", mousemoved);
   this.canvas.addEventListener("mousedown", mouseclicked);
 
+  // background music setup
+  this.backgroundMusic = backgroundMusic;
   // setup game structure
   this.currentLevel = level;
   if(level > 1){

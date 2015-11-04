@@ -12,6 +12,7 @@ HUD.initialize = function (container){
   this.highScoreElem = container.querySelector("#highscore");
   this.timeLeftElem = container.querySelector("#timeleft");
   this.targetScore = container.querySelector("#targetscore");
+  this.button = container.querySelector("#button");
 
   if (typeof Storage === "undefined"){
     console.log('Web Storage is not supported. Progress will not be saved');
@@ -69,3 +70,15 @@ HUD.updateScore = function (newScore, newLevel) {
     }
   }
 };
+
+HUD.mute = function(){
+  if(Controller.mute == true){
+    this.button.innerHTML = 'Mute';
+    Controller.mute = false;
+    InGame.backgroundMusic.volume = 0.4;
+  } else {
+    this.button.innerHTML = 'Unmute';
+    Controller.mute = true;
+    InGame.backgroundMusic.volume = 0;
+  }
+}

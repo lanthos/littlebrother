@@ -28,8 +28,8 @@ canvas {
 .button {
     color: #B6FFC2;
     position: absolute;
-    bottom: 25px;
-    left: 35px;
+    top: 12px;
+    left: 20px;
     font-size: 25px;
     font-family: monospace;
     line-height: 25px;
