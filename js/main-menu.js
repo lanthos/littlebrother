@@ -12,9 +12,10 @@ function MainMenu(container){
     '<div>Art: Sasha </div>'+
     '<div>Coder types: Sdonai, Sam, Jeremy </div>'+
     '<div>Game Design: Calix </div>'+
-    '<div>Music: tbd </div>'+
+    '<div>Music: Calix </div>'+
     '<div>Project lead: Jeremy Kenyon </div>'+
-    '<div>You peeps rock!  Thanks for all of the help and hard work. - JK :)</div>' 
+    '<div>You peeps rock!  Thanks for all of the help and hard work. - JK :)</div>'+
+    '<div>Game created by members of Gamkedo® LA Game Dev Club: <a href="http://LAGameDevs.com">http://LAGameDevs.com</a>'
   '</div>';
   container.querySelector('.next-level').addEventListener('click', function(){
     Controller.nextLevel();
