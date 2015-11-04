@@ -71,9 +71,9 @@ InGame.initialize = function(container, level){
   this.backgroundMusic = backgroundMusic;
   // setup game structure
   this.currentLevel = level;
-  if(level > 1){
-    levelTime *= 1.2;
-  }
+  // if(level > 1){
+  //   levelTime *= 1.2;
+  // }
   HUD.targetScore.innerHTML = levelScoreMultiplier * level;
   this.start_time = new Date();
   for (var c = 0; c < TILE_COLS; c++){
