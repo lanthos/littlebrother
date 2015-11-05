@@ -11,7 +11,7 @@ function MainMenu(container){
     '<div class="credits">'+
     '<div>Art: Sasha </div>'+
     '<div>Coder types: Sdonai, Sam, Jeremy </div>'+
-    '<div>Game Design: Calix </div>'+
+    '<div>Game Design: Calix and Jeremy </div>'+
     '<div>Music: Calix </div>'+
     '<div>Project lead: Jeremy Kenyon </div>'+
     '<div>You peeps rock!  Thanks for all of the help and hard work. - JK :)</div>'+
