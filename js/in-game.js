@@ -14,7 +14,7 @@ var baseLevelTime = 60;
 var levelTime = baseLevelTime;
 
 // score vars
-var levelScoreMultiplier = 350;
+var levelScoreMultiplier = 35;  //default should be 350
 var scoreMultiplier = 6; // this is for beefing up scoring to make people feel awesome
 var scoreValue = 0;
 
