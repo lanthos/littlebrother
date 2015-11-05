@@ -5,7 +5,7 @@ function MainMenu(container){
   HUD.updateScore(0, 1);
   // This can be done much better by making an ajax call
   container.innerHTML = '<div class="centered">'+
-    '<h3>Welcom to Little Brother</h3>'+
+    '<h3>Welcome to Little Brother</h3>'+
     '<button type="button" class="next-level" >Click To Begin Playing</button>'+
     '<br></br> Created by: <br></br>'+
     '<div class="credits">'+

@@ -65,6 +65,8 @@ canvas {
 
 #game-container>*{
   margin: 0px auto;
+  font-family: monospace;
+  line-height: 20px;
 }
 
 .temp-menu {
@@ -83,5 +85,4 @@ canvas {
   text-align: center;
   vertical-align: middle;
   font-size: 12px;
-  line-height: 25px;
 }
