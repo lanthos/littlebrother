@@ -16,7 +16,8 @@ var storyBits = {1:"Walls and haystacks.<br></br> That's all the Storied history
 13:"We are all Americans now.<br></br>We are all on camera, in writing, stored and logged, classified and eyes only.",
 14:'<img src="images/lilbro1.png">',
 15:"We are all suspected, all traitors in the making, all criminals and revolutionaries.<br></br>We are all Americans now.",
-16:"May the right hand never know who the left is hurting.<br></br>The magician's assistant is in on the trick;<br></br>dead rabbits are cheaper than magic."
+16:"May the right hand never know who the left is hurting.<br></br>The magician's assistant is in on the trick;<br></br>dead rabbits are cheaper than magic.",
+17:"Thanks for playing our game!  For real world stories check out <a href='https://wikileaks.org/index.en.html'>Wikileaks</a>"
 };
 
 function WinScene(container){

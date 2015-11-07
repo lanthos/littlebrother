@@ -52,4 +52,4 @@ Controller.soundFormat = function() {
     this.audioFormat = ".ogg";
   }
   return this.audioFormat;
-}
+};
